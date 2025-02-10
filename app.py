@@ -37,3 +37,7 @@ def hello_there_rendertemplate(name = None):
         name=name,
         date=datetime.now()
     )
+
+
+if __name__=="__main__":
+    app.run(debug=True)

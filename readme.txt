@@ -20,23 +20,27 @@ Select the Python interpreter you installed at the beginning of the tutorial.
 Open terminal (ctrl+shift+`)
 python --version
 Install flask - https://code.visualstudio.com/docs/python/tutorial-flask
-python -m pip install flask
+You can install flask under .venv 
+D:\Projects\PythonFlaskVSCodeProject> cd .venv 
+D:\Projects\PythonFlaskVSCodeProject\.venv>python -m pip install flask
+
+If you don't do this, flask will be installed directly in parent env that is where the python is installed and that module will be available to all the apps.
 
 create app.py
 -------------
-from flask import Flask
-app = Flask(__name__)
+    from flask import Flask
+    app = Flask(__name__)
 
-@app.route("/")
-def home():
-    return "Hello, Flask!"
+    @app.route("/")
+    def home():
+        return "Hello, Flask!"
 
 
 
 To start the server:
-python -m flask run
-O/P:
-Running on http://127.0.0.1:5000
+    python -m flask run
+    O/P:
+    Running on http://127.0.0.1:5000
 
 
 In Browser,
