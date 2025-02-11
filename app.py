@@ -1,13 +1,25 @@
-from flask import Flask
+from flask import Flask, render_template
+# when I tried to install flask_sqlachemy using pip install flask-sqlalchemy
+# it installed in global python library (D:\Projects\Python312\Lib\site-packages) instead of workspace's virtual env(.venv)
+# I am not sure why did it do like that
+# But now, I have to use global python library as my Python Interpreter instead of venv
+# So, ctrl+shift+p, Python: Select Interpreter, choose Global interpreter which is installed at D:\Projects\Python312
+# 
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import re
-from flask import render_template
 
+# initialize an app
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
+db = SQLAlchemy(app)
+
 @app.route("/")
+@app.route("/index")
 def home():
-    return "Hello, Flask!"
+    #return "Hello, Flask!"
+    return render_template("index.html")
 
 @app.route("/hello/<name>")
 def hello_there(name):
@@ -41,3 +53,4 @@ def hello_there_rendertemplate(name = None):
 
 if __name__=="__main__":
     app.run(debug=True)
+    # app.run(debug=True, port=8000)

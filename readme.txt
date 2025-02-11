@@ -95,6 +95,9 @@ ctrl+shift+x
 install the GitHub Pull Requests and Issues extension. 
 
 
+Install sqlalchemy to make flask database work
+pip install flask sqlalchemy
+
 Flask project youtube video:
 https://www.youtube.com/watch?v=oA8brF3w5XQ
 
