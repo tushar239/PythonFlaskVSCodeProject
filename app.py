@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, url_for, redirect
 # when I tried to install flask_sqlachemy using pip install flask-sqlalchemy
 # it installed in global python library (D:\Projects\Python312\Lib\site-packages) instead of workspace's virtual env(.venv)
 # I am not sure why did it do like that
@@ -14,6 +14,22 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
 db = SQLAlchemy(app)
+
+# ORM in flask
+class Todo(db.Model):
+
+    sno = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String(200), nullable=False)
+    desc = db.Column(db.String(500), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.now)
+       
+
+    def __repr__(self):
+        return f"{self.sno} - {self.title}"
+
+# create database
+with app.app_context():
+    db.create_all()
 
 @app.route("/")
 @app.route("/index")
@@ -50,7 +66,8 @@ def hello_there_rendertemplate(name = None):
         date=datetime.now()
     )
 
-
 if __name__=="__main__":
     app.run(debug=True)
     # app.run(debug=True, port=8000)
+
+ 
