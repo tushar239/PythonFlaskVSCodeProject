@@ -108,7 +108,9 @@ pip install mysqlclient
 
 Flask project youtube video:
 https://www.youtube.com/watch?v=oA8brF3w5XQ
+Flask application example:
 https://www.geeksforgeeks.org/connect-flask-to-a-database-with-flask-sqlalchemy/#creating-apppy
-
+https://www.geeksforgeeks.org/how-to-use-flask-session-in-python-flask/?ref=asr4
+https://www.geeksforgeeks.org/flask-url-helper-function-flask-url_for/?ref=asr6
 
 
