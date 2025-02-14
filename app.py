@@ -33,7 +33,8 @@ class Todo(db.Model):
 
 # create database
 with app.app_context():
-    # this will create todo.db and todo table in it
+    # this will create todo.db and todo table in workspace for sqlite
+    # for mysql, you need to have created todo database, this will create todo table in it
     db.create_all()
 
 @app.route("/")
