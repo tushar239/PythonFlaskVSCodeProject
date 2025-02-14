@@ -92,7 +92,11 @@ launch.json :
 Github extension:
 https://code.visualstudio.com/docs/sourcecontrol/github
 ctrl+shift+x
-install the GitHub Pull Requests and Issues extension. 
+install the 'GitHub Pull Requests and Issues extension'. 
+
+Jinja2 snippet kit extension:
+ctrl+shift+x (open extensions)
+Install 'Jinja2 Snippet Kit'
 
 
 Install sqlalchemy to make flask database work
@@ -104,5 +108,7 @@ pip install mysqlclient
 
 Flask project youtube video:
 https://www.youtube.com/watch?v=oA8brF3w5XQ
+https://www.geeksforgeeks.org/connect-flask-to-a-database-with-flask-sqlalchemy/#creating-apppy
+
 
 

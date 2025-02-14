@@ -1,3 +1,10 @@
+'''
+Flask project youtube video:
+https://www.youtube.com/watch?v=oA8brF3w5XQ
+Flask application example:
+https://www.geeksforgeeks.org/connect-flask-to-a-database-with-flask-sqlalchemy/#creating-apppy
+'''
+
 from flask import Flask, render_template, request, url_for, redirect
 # when I tried to install flask_sqlachemy using pip install flask-sqlalchemy
 # it installed in global python library (D:\Projects\Python312\Lib\site-packages) instead of workspace's virtual env(.venv)
@@ -36,12 +43,29 @@ with app.app_context():
     # this will create todo.db and todo table in workspace for sqlite
     # for mysql, you need to have created todo database, this will create todo table in it
     db.create_all()
+    '''
+    # somehow, this tries to insert a record twice.
+    todo = Todo(title='make money',
+               desc='need to take money from the client')
 
+    db.session.add(todo)
+    db.session.commit()
+    '''
+    
 @app.route("/")
 @app.route("/index")
 def home():
+    todo = Todo(title='make money',
+               desc='need to take money from the client')
+
+    db.session.add(todo)
+    db.session.commit()
     #return "Hello, Flask!"
     return render_template("index.html")
+
+@app.route("/show")
+def show_todos():
+    allTodos = Todo.query.all()
 
 @app.route("/hello/<name>")
 def hello_there(name):
@@ -73,7 +97,10 @@ def hello_there_rendertemplate(name = None):
     )
 
 if __name__=="__main__":
+#if __name__=="app":
     app.run(debug=True)
+    print("hello")
     # app.run(debug=True, port=8000)
+    
 
  
