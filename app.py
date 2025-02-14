@@ -12,7 +12,11 @@ import re
 # initialize an app
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
+# to work with mysql, you need to follow https://www.digitalocean.com/community/tutorials/how-to-use-flask-sqlalchemy-to-interact-with-databases-in-a-flask-application
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://admin:admin@localhost:3306/todo"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 
 # ORM in flask
@@ -29,6 +33,7 @@ class Todo(db.Model):
 
 # create database
 with app.app_context():
+    # this will create todo.db and todo table in it
     db.create_all()
 
 @app.route("/")
