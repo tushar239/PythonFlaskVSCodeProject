@@ -36,7 +36,9 @@ db = SQLAlchemy(app)
 engine = db.create_engine(DATABASE_URI)
 
 
-# ORM in flask
+# ORM in flask - Declare a mapping
+# you need this mapping for ORM api.
+# for CORE api, you need to create a table, you don't need this mapping
 class Todo(db.Model):
 
     sno = db.Column(db.Integer, primary_key = True)
