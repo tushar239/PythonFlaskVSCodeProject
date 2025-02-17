@@ -10,6 +10,7 @@ https://www.geeksforgeeks.org/flask-url-helper-function-flask-url_for/?ref=asr6
 
 from flask import Flask, render_template, request, url_for, redirect
 from sqlalchemy import sql
+from sqlalchemy.orm import sessionmaker 
 # when I tried to install flask_sqlachemy using pip install flask-sqlalchemy
 # it installed in global python library (D:\Projects\Python312\Lib\site-packages) instead of workspace's virtual env(.venv)
 # I am not sure why did it do like that
@@ -27,7 +28,6 @@ app = Flask(__name__)
 # DATABASE_URI = "sqlite:///todo.db"
 DATABASE_URI = "mysql://admin:admin@localhost:3306/todo"
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -44,7 +44,6 @@ class Todo(db.Model):
     desc = db.Column(db.String(500), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.now)
        
-
     def __repr__(self):
         return f"{self.sno} - {self.title}"
 
@@ -72,15 +71,16 @@ def home():
     db.session.commit()
 
     '''
-    allTodos = Todo.query.all()
-    #print(allTodos)
-    # passing allTodos in variable named allTodos to index.html. 
-    # Using Jinja2 templating, I can read this variable in index.html
-    return render_template("index.html", allTodos = allTodos) 
+    There are two ways, you can query datbase using SQLAlchemy
+    https://www.geeksforgeeks.org/sqlalchemy-tutorial-in-python/
+    1. SQLAlchemy Core api
+        you can use insert, select etc functions or textual queries
+    2. SQLAlchemy ORM api
+        creating a Model and querying using that model
     '''
 
-    # https://www.datacamp.com/tutorial/sqlalchemy-tutorial-examples
-    # https://www.geeksforgeeks.org/sqlalchemy-tutorial-in-python/
+    '''
+    # Core api
     sql_query = sql.text("SELECT * FROM todo.todo")
     conn = engine.connect() 
     result_cursor = conn.execute(sql_query) # sqlalchemy.engine.cursor.CursorResult 
@@ -88,11 +88,27 @@ def home():
     allTodos = result_cursor.fetchall()
     print(allTodos) # sqlalchemy.engine.result.ScalarResult
     conn.close()
-    #for todo_obj in result.scalars():
-    #    allTodos.append(todo_obj)
-
+    
     return render_template("index.html", allTodos = allTodos)
-    #return "Hello, Flask!"
+    '''
+
+    '''
+    # ORM api
+    allTodos = Todo.query.all()
+    #print(allTodos)
+    
+    # passing allTodos in variable named allTodos to index.html. 
+    # Using Jinja2 templating, I can read this variable in index.html
+    return render_template("index.html", allTodos = allTodos) 
+    '''
+
+    # ORM api
+    #session query api - https://www.geeksforgeeks.org/sqlalchemy-db-session-query/
+    Session = sessionmaker(bind=engine) 
+    session = Session() 
+    allTodos_session_query_api = session.query(Todo).all()
+    print(allTodos_session_query_api)
+    return render_template("index.html", allTodos = allTodos_session_query_api)
 
 @app.route("/show")
 def show_todos():

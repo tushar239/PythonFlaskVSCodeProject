@@ -128,8 +128,20 @@ Jinja2 tutorial:
 https://documentation.bloomreach.com/engagement/docs/jinja-syntax
 
 sqlalchemy tutorial:
-SQLAlchemy is the Python SQL toolkit that allows developers to access and manage SQL databases using Pythonic domain language. 
-You can write a query in the form of a string or chain Python objects for similar queries. 
-https://www.datacamp.com/tutorial/sqlalchemy-tutorial-examples
-https://www.geeksforgeeks.org/sqlalchemy-tutorial-in-python/
+    SQLAlchemy is the Python SQL toolkit that allows developers to access and manage SQL databases using Pythonic domain language. 
+    You can write a query in the form of a string or chain Python objects for similar queries. 
 
+    There are two ways, you can query datbase using SQLAlchemy
+    https://www.geeksforgeeks.org/sqlalchemy-tutorial-in-python/
+    1. SQLAlchemy Core api
+        you can use insert, select etc functions or textual queries
+    2. SQLAlchemy ORM api
+        creating a Model and querying using that model
+
+
+    Textual Query api:
+    https://www.geeksforgeeks.org/sqlalchemy-tutorial-in-python/
+    https://www.datacamp.com/tutorial/sqlalchemy-tutorial-examples
+
+
+    (ORM)session query api - https://www.geeksforgeeks.org/sqlalchemy-db-session-query/
