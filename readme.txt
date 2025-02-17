@@ -38,9 +38,16 @@ create app.py
 
 
 To start the server:
-    python -m flask run
+    - python -m flask run
     O/P:
     Running on http://127.0.0.1:5000
+
+    - right click in app.py and run as python file
+    python app.py
+    
+    - flask --app app run --debug     ---- somehow this way debugging is not working. 
+                                            you have to tray below approach
+    As a shortcut, if the file is named app.py or wsgi.py, you don’t have to use --app. 
 
 
 In Browser,
@@ -114,4 +121,8 @@ https://flask-sqlalchemy.readthedocs.io/en/stable/queries/
 https://www.geeksforgeeks.org/how-to-use-flask-session-in-python-flask/?ref=asr4
 https://www.geeksforgeeks.org/flask-url-helper-function-flask-url_for/?ref=asr6
 
+html bootstrap code:
+https://getbootstrap.com/docs/5.3/content/tables/
 
+Jinja2 tutorial:
+https://documentation.bloomreach.com/engagement/docs/jinja-syntax

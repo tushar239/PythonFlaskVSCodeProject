@@ -63,12 +63,20 @@ def home():
 
     db.session.add(todo)
     db.session.commit()
+
+    allTodos = Todo.query.all()
+    print(allTodos)
+
+    # passing allTodos in variable named allTodos to index.html. 
+    # Using Jinja2 templating, I can read this variable in index.html
+    return render_template("index.html", allTodos = allTodos) 
     #return "Hello, Flask!"
-    return render_template("index.html")
 
 @app.route("/show")
 def show_todos():
     allTodos = Todo.query.all()
+    print(allTodos)
+    return str(allTodos)
 
 @app.route("/hello/<name>")
 def hello_there(name):
