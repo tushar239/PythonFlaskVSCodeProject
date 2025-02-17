@@ -126,3 +126,10 @@ https://getbootstrap.com/docs/5.3/content/tables/
 
 Jinja2 tutorial:
 https://documentation.bloomreach.com/engagement/docs/jinja-syntax
+
+sqlalchemy tutorial:
+SQLAlchemy is the Python SQL toolkit that allows developers to access and manage SQL databases using Pythonic domain language. 
+You can write a query in the form of a string or chain Python objects for similar queries. 
+https://www.datacamp.com/tutorial/sqlalchemy-tutorial-examples
+https://www.geeksforgeeks.org/sqlalchemy-tutorial-in-python/
+

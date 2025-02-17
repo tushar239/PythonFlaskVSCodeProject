@@ -9,6 +9,7 @@ https://www.geeksforgeeks.org/flask-url-helper-function-flask-url_for/?ref=asr6
 '''
 
 from flask import Flask, render_template, request, url_for, redirect
+from sqlalchemy import sql
 # when I tried to install flask_sqlachemy using pip install flask-sqlalchemy
 # it installed in global python library (D:\Projects\Python312\Lib\site-packages) instead of workspace's virtual env(.venv)
 # I am not sure why did it do like that
@@ -22,12 +23,18 @@ import re
 # initialize an app
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
 # to work with mysql, you need to follow https://www.digitalocean.com/community/tutorials/how-to-use-flask-sqlalchemy-to-interact-with-databases-in-a-flask-application
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://admin:admin@localhost:3306/todo"
+# DATABASE_URI = "sqlite:///todo.db"
+DATABASE_URI = "mysql://admin:admin@localhost:3306/todo"
+
+#app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///todo.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+
 db = SQLAlchemy(app)
+engine = db.create_engine(DATABASE_URI)
+
 
 # ORM in flask
 class Todo(db.Model):
@@ -64,12 +71,27 @@ def home():
     db.session.add(todo)
     db.session.commit()
 
+    '''
     allTodos = Todo.query.all()
-    print(allTodos)
-
+    #print(allTodos)
     # passing allTodos in variable named allTodos to index.html. 
     # Using Jinja2 templating, I can read this variable in index.html
     return render_template("index.html", allTodos = allTodos) 
+    '''
+
+    # https://www.datacamp.com/tutorial/sqlalchemy-tutorial-examples
+    # https://www.geeksforgeeks.org/sqlalchemy-tutorial-in-python/
+    sql_query = sql.text("SELECT * FROM todo.todo")
+    conn = engine.connect() 
+    result_cursor = conn.execute(sql_query) # sqlalchemy.engine.cursor.CursorResult 
+    print(result_cursor)
+    allTodos = result_cursor.fetchall()
+    print(allTodos) # sqlalchemy.engine.result.ScalarResult
+    conn.close()
+    #for todo_obj in result.scalars():
+    #    allTodos.append(todo_obj)
+
+    return render_template("index.html", allTodos = allTodos)
     #return "Hello, Flask!"
 
 @app.route("/show")
