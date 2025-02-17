@@ -39,6 +39,7 @@ engine = db.create_engine(DATABASE_URI)
 # ORM in flask - Declare a mapping
 # you need this mapping for ORM api.
 # for CORE api, you need to create a table, you don't need this mapping
+# https://www.geeksforgeeks.org/sqlalchemy-tutorial-in-python/
 class Todo(db.Model):
 
     sno = db.Column(db.Integer, primary_key = True)
@@ -63,14 +64,18 @@ with app.app_context():
     db.session.commit()
     '''
     
-@app.route("/")
-@app.route("/index")
+@app.route("/", methods=['GET', 'POST'])
+@app.route("/index", methods=['GET', 'POST'])
 def home():
-    todo = Todo(title='make money',
-               desc='need to take money from the client')
-
-    db.session.add(todo)
-    db.session.commit()
+    if request.method == "POST":
+        title1 = request.form['title']
+        desc1 = request.form['desc']
+        #print(title1)
+        if title1:
+            todo = Todo(title=title1.strip(), desc=desc1.strip())
+            db.session.add(todo)
+            db.session.commit()
+            
 
     '''
     There are two ways, you can query datbase using SQLAlchemy
@@ -109,6 +114,7 @@ def home():
     Session = sessionmaker(bind=engine) 
     session = Session() 
     allTodos_session_query_api = session.query(Todo).all()
+    session.close()
     print(allTodos_session_query_api)
     return render_template("index.html", allTodos = allTodos_session_query_api)
 
