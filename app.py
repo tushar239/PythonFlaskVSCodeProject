@@ -129,17 +129,25 @@ def delete_todo(sno):
     # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
     result = session.query(Todo) \
     .filter(Todo.sno == sno) \
-        .delete(synchronize_session=False)
+    .delete(synchronize_session=False)
+    
     session.commit()
     print("Rows deleted:", result)
     session.close()
+    
+    # https://www.geeksforgeeks.org/redirecting-to-url-in-flask/
+    # another option is url_for - https://www.geeksforgeeks.org/redirecting-to-url-in-flask/
+    return redirect("/")
 
+    '''
     # reload all todos
     Session = sessionmaker(bind=engine)
     session = Session() 
     allTodos = session.query(Todo).all()
     session.close()
+    
     return render_template("index.html", allTodos = allTodos)
+    '''
 
 @app.route("/update/<sno>")
 def uupdate_todo(sno):
