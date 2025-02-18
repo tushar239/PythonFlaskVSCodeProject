@@ -69,37 +69,37 @@
     </div>
     <div class="container my-3">
         <h2>Your Todos</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">SNo</th>
-                    <th scope="col">title</th>
-                    <th scope="col">description</th>
-                    <th scope="col">time</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--Jinja2 tutorial - https://jinja.palletsprojects.com/en/stable/templates/
+        <!--Jinja2 tutorial - https://jinja.palletsprojects.com/en/stable/templates/
                 it has statements, expressions, comments, filters, tests, control structures-->
-                <!-- type jfor (jinja2 syntax for for loop)-->
-                {% if allTodos|length() == 0 %}
-                    no records
-                {% else %}
-                {% for todo in allTodos %}
+        <!-- type jifelse -->
+        {% if allTodos|length() == 0 %}
+            no records
+        {% else %}
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">{{loop.index}}</th>
-                        <!--<th scope="row">{{todo.sno}}</th>-->
-                        <td>{{todo.title}}</td>
-                        <td>{{todo.desc}}</td>
-                        <td>{{todo.date_created}}</td>
-                        <td><button type="button" class="btn btn-outline-dark mx-1 btn-sm" ><a href="/update/{{todo.sno}}">Update</a></button></td>
-                        <td><button type="button" class="btn btn-outline-dark mx-1 btn-sm" ><a href="/delete/{{todo.sno}}">Delete</a></button></td>
+                        <th scope="col">SNo</th>
+                        <th scope="col">title</th>
+                        <th scope="col">description</th>
+                        <th scope="col">time</th>
                     </tr>
+                </thead>
+                <tbody>
+                    <!-- type jfor (jinja2 syntax for for loop)-->
+                    {% for todo in allTodos %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <!--<th scope="row">{{todo.sno}}</th>-->
+                            <td>{{todo.title}}</td>
+                            <td>{{todo.desc}}</td>
+                            <td>{{todo.date_created}}</td>
+                            <td><button type="button" class="btn btn-outline-dark mx-1 btn-sm" ><a href="/update/{{todo.sno}}">Update</a></button></td>
+                            <td><button type="button" class="btn btn-outline-dark mx-1 btn-sm" ><a href="/delete/{{todo.sno}}">Delete</a></button></td>
+                        </tr>
                     {% endfor %}
-                {% endif %} 
-                
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        {% endif %} 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
