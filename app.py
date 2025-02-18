@@ -127,10 +127,17 @@ def delete_todo(sno):
     Session = sessionmaker(bind=engine) 
     session = Session() 
     # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
+    # filter vs filter_by - https://stackoverflow.com/questions/2128505/difference-between-filter-and-filter-by-in-sqlalchemy
     result = session.query(Todo) \
     .filter(Todo.sno == sno) \
     .delete(synchronize_session=False)
-    
+    # or
+    '''
+    result = session.query(Todo) \
+    .filter_by(sno = sno) \
+    .delete(synchronize_session=False)
+    '''
+
     session.commit()
     print("Rows deleted:", result)
     session.close()
