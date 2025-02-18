@@ -126,6 +126,8 @@ https://getbootstrap.com/docs/5.3/content/tables/
 
 Jinja2 tutorial:
 https://documentation.bloomreach.com/engagement/docs/jinja-syntax
+https://jinja.palletsprojects.com/en/stable/templates/
+it has statements, expressions, comments, filters, tests, control structures
 
 sqlalchemy tutorial:
     SQLAlchemy is the Python SQL toolkit that allows developers to access and manage SQL databases using Pythonic domain language. 
