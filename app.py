@@ -126,6 +126,7 @@ def delete_todo(sno):
     # delete a todo
     Session = sessionmaker(bind=engine) 
     session = Session() 
+    # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
     result = session.query(Todo) \
     .filter(Todo.sno == sno) \
         .delete(synchronize_session=False)
