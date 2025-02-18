@@ -9,6 +9,7 @@ https://www.geeksforgeeks.org/flask-url-helper-function-flask-url_for/?ref=asr6
 '''
 
 from flask import Flask, render_template, request, url_for, redirect
+from sqlalchemy import delete
 from sqlalchemy import sql
 from sqlalchemy.orm import sessionmaker 
 # when I tried to install flask_sqlachemy using pip install flask-sqlalchemy
@@ -117,6 +118,31 @@ def home():
     session.close()
     print(allTodos_session_query_api)
     return render_template("index.html", allTodos = allTodos_session_query_api)
+
+@app.route("/delete/<sno>")
+def delete_todo(sno):
+    #print(sno)
+    # from https://www.geeksforgeeks.org/sqlalchemy-orm-query/
+    # delete a todo
+    Session = sessionmaker(bind=engine) 
+    session = Session() 
+    result = session.query(Todo) \
+    .filter(Todo.sno == sno) \
+        .delete(synchronize_session=False)
+    session.commit()
+    print("Rows deleted:", result)
+    session.close()
+
+    # reload all todos
+    Session = sessionmaker(bind=engine)
+    session = Session() 
+    allTodos = session.query(Todo).all()
+    session.close()
+    return render_template("index.html", allTodos = allTodos)
+
+@app.route("/update/<sno>")
+def uupdate_todo(sno):
+    print(sno)
 
 @app.route("/show")
 def show_todos():

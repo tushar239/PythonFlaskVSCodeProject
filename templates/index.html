@@ -13,7 +13,8 @@
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">MyTOdo</a>
+            <!-- href=/ means reload the same page-->
+            <a class="navbar-brand" href="/">MyTOdo</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -82,9 +83,12 @@
                 {% for todo in allTodos %}
                 <tr>
                     <th scope="row">{{loop.index}}</th>
+                    <!--<th scope="row">{{todo.sno}}</th>-->
                     <td>{{todo.title}}</td>
                     <td>{{todo.desc}}</td>
                     <td>{{todo.date_created}}</td>
+                    <td><button type="button" class="btn btn-outline-dark mx-1 btn-sm" ><a href="/update/{{todo.sno}}">Update</a></button></td>
+                    <td><button type="button" class="btn btn-outline-dark mx-1 btn-sm" ><a href="/delete/{{todo.sno}}">Delete</a></button></td>
                 </tr>
                 {% endfor %}
             </tbody>
