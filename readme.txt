@@ -47,6 +47,7 @@ To start the server:
     
     - flask --app app run --debug     ---- somehow this way debugging is not working. 
                                             you have to tray below approach
+    app.py is consiered as an application here
     As a shortcut, if the file is named app.py or wsgi.py, you don’t have to use --app. 
 
 
