@@ -172,6 +172,7 @@ def update_todo(sno):
     desc = request.form['desc']
     print(title)
     
+    
     Session = sessionmaker(bind=engine) 
     session = Session() 
     session.query(Todo)\
@@ -179,6 +180,7 @@ def update_todo(sno):
         .update({Todo.title: title, Todo.desc: desc})
     session.commit()
     session.close()
+    
     
     '''
     # SQLAlchemy Core Texual SQL api
@@ -189,7 +191,7 @@ def update_todo(sno):
     conn.commit()
     conn.close()
     '''
-    
+
     # reload all todos
     Session = sessionmaker(bind=engine)
     session = Session() 
