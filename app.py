@@ -67,7 +67,7 @@ with app.app_context():
     
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/index", methods=['GET', 'POST'])
-def home():
+def home_page():
     if request.method == "POST":
         title1 = request.form['title']
         desc1 = request.form['desc']
@@ -119,7 +119,7 @@ def home():
     print(allTodos_session_query_api)
     return render_template("index.html", allTodos = allTodos_session_query_api)
 
-@app.route("/delete/<sno>")
+@app.route("/delete/<int:sno>")
 def delete_todo(sno):
     #print(sno)
     # from https://www.geeksforgeeks.org/sqlalchemy-orm-query/
@@ -156,9 +156,36 @@ def delete_todo(sno):
     return render_template("index.html", allTodos = allTodos)
     '''
 
-@app.route("/update/<sno>")
-def uupdate_todo(sno):
-    print(sno)
+@app.route("/updatepage/<int:sno>")
+def update_todo_page(sno):
+    #print(sno)
+    Session = sessionmaker(bind=engine) 
+    session = Session() 
+    todo = session.query(Todo).filter(Todo.sno == sno).first()
+    session.close()
+    return render_template("update.html", todo = todo)
+
+@app.route("/update/<int:sno>", methods=['POST'])
+def update_todo(sno):
+    #print(sno)
+    title = request.form['title']
+    desc = request.form['desc']
+    Session = sessionmaker(bind=engine) 
+    session = Session() 
+    session.query(Todo)\
+        .filter(Todo.sno == sno)\
+        .update({Todo.title: title, Todo.desc: desc})
+    session.commit()
+    session.close()
+    
+    # reload all todos
+    Session = sessionmaker(bind=engine)
+    session = Session() 
+    allTodos = session.query(Todo).all()
+    session.close()
+    
+    return render_template("index.html", allTodos = allTodos)
+
 
 @app.route("/show")
 def show_todos():
