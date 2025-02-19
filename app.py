@@ -88,7 +88,7 @@ def home_page():
     '''
 
     '''
-    # Core api
+    # SQLAlchemy Core Texual SQL api
     sql_query = sql.text("SELECT * FROM todo.todo")
     conn = engine.connect() 
     result_cursor = conn.execute(sql_query) # sqlalchemy.engine.cursor.CursorResult 
@@ -101,7 +101,7 @@ def home_page():
     '''
 
     '''
-    # ORM api
+    # SQLAlchemy ORM's Query api
     allTodos = Todo.query.all()
     #print(allTodos)
     
@@ -170,6 +170,8 @@ def update_todo(sno):
     #print(sno)
     title = request.form['title']
     desc = request.form['desc']
+    print(title)
+    
     Session = sessionmaker(bind=engine) 
     session = Session() 
     session.query(Todo)\
@@ -177,6 +179,16 @@ def update_todo(sno):
         .update({Todo.title: title, Todo.desc: desc})
     session.commit()
     session.close()
+    
+    '''
+    # SQLAlchemy Core Texual SQL api
+    sql_query = sql.text("update todo.todo t set t.title="+"'"+title+"'"+","+"t.desc="+"'"+desc+"'"+" where t.sno="+str(sno))
+    #sql_query = sql.text("update todo.todo as t set t.title="+title+","+"t.desc="+desc+" where t.sno="+str(sno))
+    conn = engine.connect() 
+    result_cursor = conn.execute(sql_query) # sqlalchemy.engine.cursor.CursorResult 
+    conn.commit()
+    conn.close()
+    '''
     
     # reload all todos
     Session = sessionmaker(bind=engine)
