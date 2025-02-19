@@ -92,9 +92,9 @@
                             <!--<th scope="row">{{todo.sno}}</th>-->
                             <td>{{todo.title}}</td>
                             <td>{{todo.desc}}</td>
-                            <td>{{todo.date_created}}</td>
-                            <td><button type="button" class="btn btn-outline-dark mx-1 btn-sm" ><a href="/update/{{todo.sno}}">Update</a></button></td>
-                            <td><button type="button" class="btn btn-outline-dark mx-1 btn-sm" ><a href="/delete/{{todo.sno}}">Delete</a></button></td>
+                            <td>{{todo.date_created}}</td>                         
+                            <td><a href="/updage/{{todo.sno}}" type="button" class="btn btn-outline-dark btn-sm">Update</a></td>                           
+                            <td><a href="/delete/{{todo.sno}}" type="button" class="btn btn-outline-dark btn-sm">Delete</a></td>                           
                         </tr>
                     {% endfor %}
                 </tbody>
