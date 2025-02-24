@@ -179,3 +179,4 @@ current_app:
 
 When a request is created, Request Context is pushed by flask. 
 A corresponding application context is also pushed when a request context is pushed.
+Application context (app_context) is also available when you run the commands from command prompt.

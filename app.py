@@ -52,6 +52,12 @@ class Todo(db.Model):
         return f"{self.sno} - {self.title}"
 
 # create database
+# db instance is available only when app_context is available
+# normally, app context is pushed with request context and popped with request context
+# It means that app_context will be available when a request is made, but will not be available
+# outside the request. If you need it, you have to manually push it using 'with app.app_context()' statement
+# Application context (app_context) is also available when you run the commands from command prompt.
+# you can run db.create_all from command prompt also.
 with app.app_context():
     # this will create todo.db and todo table in workspace for sqlite
     # for mysql, you need to have created todo database, this will create todo table in it
