@@ -148,3 +148,34 @@ sqlalchemy tutorial:
 
 
     (ORM)session query api - https://www.geeksforgeeks.org/sqlalchemy-db-session-query/
+
+
+Flask Session Context
+    https://www.geeksforgeeks.org/how-to-use-flask-session-in-python-flask/
+
+g and current_app
+    https://flask.palletsprojects.com/en/stable/appcontext/
+
+g:
+    https://stackoverflow.com/questions/40881750/whats-the-difference-between-current-app-and-g-context-variable
+    g is a special object that is unique for each request. 
+    It is used to store data that might be accessed by multiple functions during the request.
+    The data stored in g resets after every request.
+
+    https://flask.palletsprojects.com/en/stable/appcontext/
+    The g name stands for “global”, but that is referring to the data being global within a context. 
+    The data on g is lost after the context ends, and it is not an appropriate place to store data between requests. 
+    Use the session or a database to store data across requests.
+
+current_app:
+    https://flask.palletsprojects.com/en/stable/appcontext/
+    Rather than referring to an app directly, you use the current_app proxy, which points to the application handling the current activity.
+    whatever you store in current_app is available app wide till the app is running. 
+    It is like an 'application' object in jsp.
+
+    Rather than referring to an app directly, you use the current_app proxy, which points to the application handling the current activity.
+    Flask automatically pushes an application context when handling a request. View functions, error handlers, and other functions that run during a request will have access to current_app.
+    Flask will also automatically push an app context when running CLI commands registered with Flask.cli using @app.cli.command().
+
+When a request is created, Request Context is pushed by flask. 
+A corresponding application context is also pushed when a request context is pushed.

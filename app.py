@@ -8,7 +8,7 @@ https://www.geeksforgeeks.org/how-to-use-flask-session-in-python-flask/?ref=asr4
 https://www.geeksforgeeks.org/flask-url-helper-function-flask-url_for/?ref=asr6
 '''
 
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, g, current_app
 from sqlalchemy import delete
 from sqlalchemy import sql
 from sqlalchemy.orm import sessionmaker 
@@ -68,9 +68,20 @@ with app.app_context():
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/index", methods=['GET', 'POST'])
 def home_page():
+    # current_app proxy object refers to current app that is running. you can store data in it which
+    # will live till the application is running.
+    #current_app.name = 'Tushar';
+    #print(current_app.name)
+    
     if request.method == "POST":
         title1 = request.form['title']
         desc1 = request.form['desc']
+        # g proxy object lives till the request lives. 
+        # If you want to share data between different functions within the same request,
+        # you can use g proxy.
+        #g.title1 = title1
+        #g.desc1 = desc1
+        
         #print(title1)
         if title1:
             todo = Todo(title=title1.strip(), desc=desc1.strip())
