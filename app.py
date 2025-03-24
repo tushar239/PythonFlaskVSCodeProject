@@ -150,6 +150,18 @@ def home_page():
 @app.route("/delete/<int:sno>")
 def delete_todo(sno):
     #print(sno)
+
+ 
+    # https://www.geeksforgeeks.org/sqlalchemy-core-delete-statement/
+    # Just like update() and insert(), you can use delete() also
+    stmt = delete(Todo)\
+            .where(Todo.sno == sno)
+    db.session.execute(stmt)
+    db.session.commit()
+    db.session.close()
+
+    # OR
+    '''
     # from https://www.geeksforgeeks.org/sqlalchemy-orm-query/
     # delete a todo
     Session = sessionmaker(bind=engine) 
@@ -157,18 +169,31 @@ def delete_todo(sno):
     # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
     # filter vs filter_by - https://stackoverflow.com/questions/2128505/difference-between-filter-and-filter-by-in-sqlalchemy
     result = session.query(Todo) \
-    .filter(Todo.sno == sno) \
-    .delete(synchronize_session=False)
+                    .filter(Todo.sno == sno) \
+                    .delete(synchronize_session=False)
+    
+    session.commit()
+    print("Rows deleted:", result)
+    session.close()
+    '''
+
     # or
     '''
+    Session = sessionmaker(bind=engine) 
+    session = Session() 
+
     result = session.query(Todo) \
     .filter_by(sno = sno) \
     .delete(synchronize_session=False)
-    '''
 
     session.commit()
     print("Rows deleted:", result)
     session.close()
+    '''
+
+    # or
+    # you can use a textual query also
+
     
     # It will find a method with route as '/' and execute it.
     # https://www.geeksforgeeks.org/redirecting-to-url-in-flask/
