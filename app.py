@@ -9,7 +9,7 @@ https://www.geeksforgeeks.org/flask-url-helper-function-flask-url_for/?ref=asr6
 '''
 
 from flask import Flask, render_template, request, url_for, redirect, g, current_app
-from sqlalchemy import delete
+from sqlalchemy import delete, update, insert
 from sqlalchemy import sql
 from sqlalchemy.orm import sessionmaker 
 # when I tried to install flask_sqlachemy using pip install flask-sqlalchemy
@@ -51,7 +51,7 @@ class Todo(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.now)
        
     def __repr__(self):
-        return f"{self.sno} - {self.title}"
+        return f"{self.sno} - {self.title} - {self.desc}"
 
 # create database
 # db instance is available only when app_context is available
@@ -92,10 +92,19 @@ def home_page():
         
         #print(title1)
         if title1:
+            '''
             todo = Todo(title=title1.strip(), desc=desc1.strip())
             db.session.add(todo)
             db.session.commit()
-            
+            '''
+            # OR
+            # https://www.geeksforgeeks.org/sqlalchemy-core-update-statement/
+            # Just like update(), you can use insert() also
+            stmt = insert(Todo)\
+                    .values({"title": title1.strip(), "desc": desc1.strip()})
+            db.session.execute(stmt)
+            db.session.commit()
+            db.session.close()
 
     '''
     There are two ways, you can query datbase using SQLAlchemy
@@ -161,6 +170,7 @@ def delete_todo(sno):
     print("Rows deleted:", result)
     session.close()
     
+    # It will find a method with route as '/' and execute it.
     # https://www.geeksforgeeks.org/redirecting-to-url-in-flask/
     # another option is url_for - https://www.geeksforgeeks.org/redirecting-to-url-in-flask/
     return redirect("/")
@@ -180,7 +190,11 @@ def update_todo_page(sno):
     #print(sno)
     Session = sessionmaker(bind=engine) 
     session = Session() 
+    # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
+    # filter vs filter_by - https://stackoverflow.com/questions/2128505/difference-between-filter-and-filter-by-in-sqlalchemy
+    # select * from todo where sno=sno LIMIT 1
     todo = session.query(Todo).filter(Todo.sno == sno).first()
+    #print("todo for update: ", todo)
     session.close()
     return render_template("update.html", todo = todo)
 
@@ -190,8 +204,33 @@ def update_todo(sno):
     title = request.form['title']
     desc = request.form['desc']
     print(title)
+
+    Session = sessionmaker(bind=engine) 
+    session = Session() 
+    # https://www.geeksforgeeks.org/sqlalchemy-core-update-statement/
+    stmt = update(Todo)\
+            .values({"title": title, "desc": desc})\
+            .where(Todo.sno == sno)
+    session.execute(stmt)
+    session.commit()
+    session.close()
+
+    # OR
+    '''
+    Session = sessionmaker(bind=engine) 
+    session = Session() 
+    # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
+    # filter vs filter_by - https://stackoverflow.com/questions/2128505/difference-between-filter-and-filter-by-in-sqlalchemy
+    # select * from todo where sno=sno LIMIT 1
+    todo = session.query(Todo).filter(Todo.sno == sno).first()
+    todo.title = title
+    todo.desc = desc
+    session.add(todo)
+    session.close()
+    '''
     
-    
+    # OR
+    '''
     Session = sessionmaker(bind=engine) 
     session = Session() 
     session.query(Todo)\
@@ -199,8 +238,9 @@ def update_todo(sno):
         .update({Todo.title: title, Todo.desc: desc})
     session.commit()
     session.close()
+    '''
     
-    
+    # OR
     '''
     # SQLAlchemy Core Texual SQL api
     sql_query = sql.text("update todo.todo t set t.title="+"'"+title+"'"+","+"t.desc="+"'"+desc+"'"+" where t.sno="+str(sno))
