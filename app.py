@@ -22,6 +22,8 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import re
 
+#print(__name__)
+
 # initialize an app
 app = Flask(__name__)
 
@@ -99,7 +101,7 @@ def home_page():
     There are two ways, you can query datbase using SQLAlchemy
     https://www.geeksforgeeks.org/sqlalchemy-tutorial-in-python/
     1. SQLAlchemy Core api
-        you can use insert, select etc functions or textual queries
+        you can use insert, update, select etc functions or textual queries
     2. SQLAlchemy ORM api
         creating a Model and querying using that model
     '''
