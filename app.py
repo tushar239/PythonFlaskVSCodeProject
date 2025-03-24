@@ -9,7 +9,7 @@ https://www.geeksforgeeks.org/flask-url-helper-function-flask-url_for/?ref=asr6
 '''
 
 from flask import Flask, render_template, request, url_for, redirect, g, current_app
-from sqlalchemy import delete, update, insert
+from sqlalchemy import delete, update, insert, select
 from sqlalchemy import sql
 from sqlalchemy.orm import sessionmaker 
 # when I tried to install flask_sqlachemy using pip install flask-sqlalchemy
@@ -137,7 +137,7 @@ def home_page():
     # Using Jinja2 templating, I can read this variable in index.html
     return render_template("index.html", allTodos = allTodos) 
     '''
-
+    
     # ORM api
     #session query api - https://www.geeksforgeeks.org/sqlalchemy-db-session-query/
     Session = sessionmaker(bind=engine) 
@@ -146,6 +146,16 @@ def home_page():
     session.close()
     print(allTodos_session_query_api)
     return render_template("index.html", allTodos = allTodos_session_query_api)
+
+    # Just like update(), insert() and delete(), you DON'T have select()
+    '''
+    stmt = select(Todo)#.where(Todo.title=="read book31")
+    allTodos1 = db.session.execute(stmt)
+    db.session.close()
+    print(allTodos1)
+    return render_template("index.html", allTodos = allTodos1)
+    '''
+
 
 @app.route("/delete/<int:sno>")
 def delete_todo(sno):
