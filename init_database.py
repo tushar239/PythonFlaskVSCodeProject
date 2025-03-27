@@ -5,6 +5,8 @@ from flask import Flask
 # But now, I have to use global python library as my Python Interpreter instead of venv
 # So, ctrl+shift+p, Python: Select Interpreter, choose Global interpreter which is installed at D:\Projects\Python312
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import sessionmaker
+
 
 # initialize an app
 app = Flask(__name__)
@@ -19,3 +21,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 engine = db.create_engine(DATABASE_URI)
+
+Session = sessionmaker(bind = engine)
+session = Session()
