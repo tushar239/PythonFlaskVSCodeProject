@@ -40,14 +40,15 @@ with app.app_context():
     db.session.commit()
     '''
 
-
-
-Base = declarative_base()
+#########################################################################################3
 
 '''
 one-to-many relationship
 https://www.youtube.com/watch?v=3N9JqtpkFJI
 '''
+
+Base = declarative_base()
+
 class BaseModel(Base):
     __abstract__ = True
     __allow_unmapped__ = True
@@ -70,5 +71,6 @@ class User(BaseModel):
     addresses = relationship(Address) # user can have list of addresses. When you Basesave user, you can save addresses also with it
 
 Base.metadata.create_all(engine)
+
 
 
