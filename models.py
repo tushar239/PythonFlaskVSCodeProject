@@ -45,6 +45,8 @@ with app.app_context():
 '''
 one-to-many relationship
 https://www.youtube.com/watch?v=3N9JqtpkFJI
+
+back_populates property = https://stackoverflow.com/questions/39869793/when-do-i-need-to-use-sqlalchemy-back-populates
 '''
 
 Base = declarative_base()
