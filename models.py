@@ -62,6 +62,7 @@ class Address(BaseModel):
     state = Column(String(200))
     zip_code = Column(String(20))
     user_id = Column(ForeignKey("users.id"))
+    user = relationship("User") 
 
     def __repr__(self):
         return f"<Address(id={self.id}, city={self.city})>"
@@ -71,7 +72,7 @@ class User(BaseModel):
 
     name = Column(String(200))
     age = Column(Integer)
-    addresses = relationship(Address) # user can have list of addresses. When you Basesave user, you can save addresses also with it
+    addresses = relationship("Address") # user can have list of addresses. When you Basesave user, you can save addresses also with it
     
     def __repr__(self):
             return f"<User(id={self.id}, name={self.name})>"

@@ -14,6 +14,7 @@ from sqlalchemy import sql
 from sqlalchemy.orm import sessionmaker 
 import re
 from models import app, db, engine, session, Todo, Address, User
+from datetime import datetime
 
 #print(__name__)
 
@@ -291,6 +292,12 @@ def create_user():
     session.add(user1)
     session.add(user2)
     session.commit()
+
+    print(f"<address1's user={address1.user}>")
+    print(f"<address2's user={address2.user}>")
+    print(f"<address3's user={address3.user}>")
+    print(f"<user1's addresses={user1.addresses}>")
+    print(f"<user2's addresses={user2.addresses}>")
 
     return "Users created. Check DB."
 
