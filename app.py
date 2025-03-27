@@ -13,7 +13,7 @@ from sqlalchemy import delete, update, insert, select
 from sqlalchemy import sql
 from sqlalchemy.orm import sessionmaker 
 import re
-from models import app, db, engine, Todo
+from models import app, db, engine, session, Todo, Address, User
 
 #print(__name__)
 
@@ -274,6 +274,25 @@ def hello_there_rendertemplate(name = None):
         name=name,
         date=datetime.now()
     )
+
+
+@app.route("/create_user")
+def create_user():
+    user1 = User(name="John Doe", age=52)
+    user2 = User(name="John Smith", age=34)
+
+    address1 = Address(city="New York", state="NY", zip_code="1001")
+    address2 = Address(city="New Jersey", state="NJ", zip_code="2001")
+    address3 = Address(city="Chicago", state="IL", zip_code="3001")
+
+    user1.addresses.extend([address1, address2])
+    user2.addresses.append(address3)
+
+    session.add(user1)
+    session.add(user2)
+    session.commit()
+
+    return "Users created. Check DB."
 
 if __name__=="__main__":
 #if __name__=="app":

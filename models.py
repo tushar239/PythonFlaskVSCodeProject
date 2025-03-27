@@ -1,5 +1,5 @@
 
-from init_database import app, db, engine
+from init_database import app, db, engine, session
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import declarative_base, relationship
 from datetime import datetime
@@ -63,12 +63,19 @@ class Address(BaseModel):
     zip_code = Column(String(20))
     user_id = Column(ForeignKey("users.id"))
 
+    def __repr__(self):
+        return f"<Address(id={self.id}, city={self.city})>"
+
 class User(BaseModel):
     __tablename__ = "users"
 
     name = Column(String(200))
     age = Column(Integer)
     addresses = relationship(Address) # user can have list of addresses. When you Basesave user, you can save addresses also with it
+    
+    def __repr__(self):
+            return f"<User(id={self.id}, name={self.name})>"
+
 
 Base.metadata.create_all(engine)
 
