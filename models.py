@@ -45,8 +45,18 @@ with app.app_context():
 '''
 one-to-many relationship
 https://www.youtube.com/watch?v=3N9JqtpkFJI
+https://thegirlsynth.hashnode.dev/mastering-sqlalchemy-relationships-exploring-the-backpopulates-parameter-and-different-relationship-types
 
 back_populates property = https://stackoverflow.com/questions/39869793/when-do-i-need-to-use-sqlalchemy-back-populates
+Back-populates is used in conjunction with the relationship() function in SQLAlchemy. 
+It is defined on both sides of the relationship and allows for automatic population of related objects. 
+This means that when one object is updated, its related objects are automatically updated as well.
+
+Without back_populates, it gives following warning.
+SAWarning: relationship 'User.addresses' will copy column users.id to column addresses.user_id, which conflicts with relationship(s): 'Address.user' (copies users.id to addresses.user_id). 
+If this is not the intention, consider if these relationships should be linked with back_populates, or if viewonly=True should be applied to one or more if they are read-only. 
+For the less common case that foreign key constraints are partially overlapping, the orm.foreign() annotation can be used to isolate the columns that should be written towards.   
+To silence this warning, add the parameter 'overlaps="user"' to the 'User.addresses' relationship. (Background on this warning at: https://sqlalche.me/e/20/qzyx) (This warning originated from the `configure_mappers()` process, which was invoked automatically in response to a user-initiated operation.)
 '''
 
 Base = declarative_base()
@@ -64,7 +74,7 @@ class Address(BaseModel):
     state = Column(String(200))
     zip_code = Column(String(20))
     user_id = Column(ForeignKey("users.id"))
-    user = relationship("User") 
+    user = relationship("User", back_populates="addresses") 
 
     def __repr__(self):
         return f"<Address(id={self.id}, city={self.city})>"
@@ -80,7 +90,7 @@ class User(BaseModel):
     age = Column(Integer)
     # user object can have list of address object. 
     # When you save/retrieve user, you can save/retrieve addresses also with it
-    addresses = relationship("Address")
+    addresses = relationship("Address", back_populates="user")
     
     def __repr__(self):
         return f"<User(id={self.id}, name={self.name})>"
