@@ -296,10 +296,48 @@ def create_user():
     print(f"<address1's user={address1.user}>")
     print(f"<address2's user={address2.user}>")
     print(f"<address3's user={address3.user}>")
-    print(f"<user1's addresses={user1.addresses}>")
-    print(f"<user2's addresses={user2.addresses}>")
+    #print(f"<user1's addresses={user1.addresses}>")
+    #print(f"<user2's addresses={user2.addresses}>")
 
     return "Users created. Check DB."
+
+@app.route("/get_user/<id>")
+def getUser(id):
+    Session = sessionmaker(bind=engine) 
+    session = Session() 
+    # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
+    # filter vs filter_by - https://stackoverflow.com/questions/2128505/difference-between-filter-and-filter-by-in-sqlalchemy
+    # select * from users where id=id LIMIT 1
+    user = session.query(User).filter(User.id == id).first()
+    
+    print("User: ", user)
+    print("User's addresses: ", user.addresses)
+    ret = "User: "+ str(user) +"\n" + "Addresses: " + str(user.addresses)
+    #ret = "User: "+ str(user)
+
+    session.close()
+    
+    #print(ret)
+    return ret
+
+@app.route("/get_address/<id>")
+def getAddress(id):
+    Session = sessionmaker(bind=engine) 
+    session = Session() 
+    # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
+    # filter vs filter_by - https://stackoverflow.com/questions/2128505/difference-between-filter-and-filter-by-in-sqlalchemy
+    # select * from addresses where id=id LIMIT 1
+    address = session.query(Address).filter(Address.id == id).first()
+    
+    print("Address: ", address)
+    print("Address's User: ", address.user)
+    ret = "Address: "+ str(address) +"\n" + "User: " + str(address.user)
+    #ret = "Address: "+ str(address)
+
+    session.close()
+
+    #print(ret)
+    return ret
 
 if __name__=="__main__":
 #if __name__=="app":

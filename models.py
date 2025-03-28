@@ -68,17 +68,26 @@ class Address(BaseModel):
 
     def __repr__(self):
         return f"<Address(id={self.id}, city={self.city})>"
+    '''
+    def __str__(self):
+        return f"<Address(id={self.id}, city={self.city})>, user={self.user}"
+    '''
 
 class User(BaseModel):
     __tablename__ = "users"
 
     name = Column(String(200))
     age = Column(Integer)
-    addresses = relationship("Address") # user can have list of addresses. When you Basesave user, you can save addresses also with it
+    # user object can have list of address object. 
+    # When you save/retrieve user, you can save/retrieve addresses also with it
+    addresses = relationship("Address")
     
     def __repr__(self):
-            return f"<User(id={self.id}, name={self.name})>"
-
+        return f"<User(id={self.id}, name={self.name})>"
+    '''
+    def __str__(self):
+        return f"<User(id={self.id}, name={self.name}), addresses={self.addresses}>"
+    '''
 
 Base.metadata.create_all(engine)
 
