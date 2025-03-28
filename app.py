@@ -312,12 +312,10 @@ def getUser(id):
     
     print("User: ", user)
     print("User's addresses: ", user.addresses)
-    ret = "User: "+ str(user) +"\n" + "Addresses: " + str(user.addresses)
-    #ret = "User: "+ str(user)
+    ret = "User: "+ str(user) +"<BR/>" + "Addresses: " + str(user.addresses)
 
     session.close()
     
-    #print(ret)
     return ret
 
 @app.route("/get_address/<id>")
@@ -331,12 +329,10 @@ def getAddress(id):
     
     print("Address: ", address)
     print("Address's User: ", address.user)
-    ret = "Address: "+ str(address) +"\n" + "User: " + str(address.user)
-    #ret = "Address: "+ str(address)
+    ret = "Address: "+ str(address) +"<BR/>" + "User: " + str(address.user)
 
     session.close()
 
-    #print(ret)
     return ret
 
 if __name__=="__main__":

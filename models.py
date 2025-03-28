@@ -77,11 +77,8 @@ class Address(BaseModel):
     user = relationship("User", back_populates="addresses") 
 
     def __repr__(self):
-        return f"<Address(id={self.id}, city={self.city})>"
-    '''
-    def __str__(self):
-        return f"<Address(id={self.id}, city={self.city})>, user={self.user}"
-    '''
+        return f"Address(id={self.id}, city={self.city})"
+
 
 class User(BaseModel):
     __tablename__ = "users"
@@ -93,11 +90,7 @@ class User(BaseModel):
     addresses = relationship("Address", back_populates="user")
     
     def __repr__(self):
-        return f"<User(id={self.id}, name={self.name})>"
-    '''
-    def __str__(self):
-        return f"<User(id={self.id}, name={self.name}), addresses={self.addresses}>"
-    '''
+        return f"User(id={self.id}, name={self.name})"
 
 Base.metadata.create_all(engine)
 
