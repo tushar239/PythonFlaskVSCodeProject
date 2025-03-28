@@ -22,5 +22,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 engine = db.create_engine(DATABASE_URI)
 
+# What is session - https://docs.sqlalchemy.org/en/20/orm/session_basics.html
 Session = sessionmaker(bind = engine)
 session = Session()

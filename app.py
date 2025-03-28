@@ -48,9 +48,9 @@ def home_page():
             # Just like update(), you can use insert() also
             stmt = insert(Todo)\
                     .values({"title": title1.strip(), "desc": desc1.strip()})
-            db.session.execute(stmt)
-            db.session.commit()
-            db.session.close()
+            session.execute(stmt)
+            session.commit()
+            #db.session.close()
 
     '''
     There are two ways, you can query datbase using SQLAlchemy
@@ -86,10 +86,10 @@ def home_page():
     
     # ORM api
     #session query api - https://www.geeksforgeeks.org/sqlalchemy-db-session-query/
-    Session = sessionmaker(bind=engine) 
-    session = Session() 
+    #Session = sessionmaker(bind=engine) 
+    #session = Session() 
     allTodos_session_query_api = session.query(Todo).all()
-    session.close()
+    #session.close()
     print(allTodos_session_query_api)
     return render_template("index.html", allTodos = allTodos_session_query_api)
 
@@ -112,16 +112,16 @@ def delete_todo(sno):
     # Just like update() and insert(), you can use delete() also
     stmt = delete(Todo)\
             .where(Todo.sno == sno)
-    db.session.execute(stmt)
-    db.session.commit()
-    db.session.close()
+    session.execute(stmt)
+    session.commit()
+    #db.session.close()
 
     # OR
     '''
     # from https://www.geeksforgeeks.org/sqlalchemy-orm-query/
     # delete a todo
-    Session = sessionmaker(bind=engine) 
-    session = Session() 
+    #Session = sessionmaker(bind=engine) 
+    #session = Session() 
     # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
     # filter vs filter_by - https://stackoverflow.com/questions/2128505/difference-between-filter-and-filter-by-in-sqlalchemy
     result = session.query(Todo) \
@@ -130,13 +130,13 @@ def delete_todo(sno):
     
     session.commit()
     print("Rows deleted:", result)
-    session.close()
+    #session.close()
     '''
 
     # or
     '''
-    Session = sessionmaker(bind=engine) 
-    session = Session() 
+    #Session = sessionmaker(bind=engine) 
+    #session = Session() 
 
     result = session.query(Todo) \
     .filter_by(sno = sno) \
@@ -144,7 +144,7 @@ def delete_todo(sno):
 
     session.commit()
     print("Rows deleted:", result)
-    session.close()
+    #session.close()
     '''
 
     # or
@@ -169,14 +169,14 @@ def delete_todo(sno):
 @app.route("/updatepage/<int:sno>")
 def update_todo_page(sno):
     #print(sno)
-    Session = sessionmaker(bind=engine) 
-    session = Session() 
+    #Session = sessionmaker(bind=engine) 
+    #session = Session() 
     # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
     # filter vs filter_by - https://stackoverflow.com/questions/2128505/difference-between-filter-and-filter-by-in-sqlalchemy
     # select * from todo where sno=sno LIMIT 1
     todo = session.query(Todo).filter(Todo.sno == sno).first()
     #print("todo for update: ", todo)
-    session.close()
+    #session.close()
     return render_template("update.html", todo = todo)
 
 @app.route("/update/<int:sno>", methods=['POST'])
@@ -186,20 +186,20 @@ def update_todo(sno):
     desc = request.form['desc']
     print(title)
 
-    Session = sessionmaker(bind=engine) 
-    session = Session() 
+    #Session = sessionmaker(bind=engine) 
+    #session = Session() 
     # https://www.geeksforgeeks.org/sqlalchemy-core-update-statement/
     stmt = update(Todo)\
             .values({"title": title, "desc": desc})\
             .where(Todo.sno == sno)
     session.execute(stmt)
     session.commit()
-    session.close()
+    #session.close()
 
     # OR
     '''
-    Session = sessionmaker(bind=engine) 
-    session = Session() 
+    #Session = sessionmaker(bind=engine) 
+    #session = Session() 
     # you can use _and, _or in filter query also - https://stackoverflow.com/questions/3332991/sqlalchemy-filter-multiple-columns
     # filter vs filter_by - https://stackoverflow.com/questions/2128505/difference-between-filter-and-filter-by-in-sqlalchemy
     # select * from todo where sno=sno LIMIT 1
@@ -207,18 +207,18 @@ def update_todo(sno):
     todo.title = title
     todo.desc = desc
     session.add(todo)
-    session.close()
+    #session.close()
     '''
     
     # OR
     '''
-    Session = sessionmaker(bind=engine) 
-    session = Session() 
+    #Session = sessionmaker(bind=engine) 
+    #session = Session() 
     session.query(Todo)\
         .filter(Todo.sno == sno)\
         .update({Todo.title: title, Todo.desc: desc})
     session.commit()
-    session.close()
+    #session.close()
     '''
     
     # OR
@@ -233,10 +233,10 @@ def update_todo(sno):
     '''
 
     # reload all todos
-    Session = sessionmaker(bind=engine)
-    session = Session() 
+    #Session = sessionmaker(bind=engine)
+    #session = Session() 
     allTodos = session.query(Todo).all()
-    session.close()
+    #session.close()
     
     return render_template("index.html", allTodos = allTodos)
 
